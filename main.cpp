@@ -13,7 +13,6 @@ bool running = true;
 SDL_Event event{};
 //Vertex Specify
 GLuint VAO{}, VBO{};
-GLuint VBOrgb{};
 GLuint ShaderProgram{};
 
 std::string gVertexShaderSource =
@@ -73,17 +72,13 @@ void Config() {
 void VertexSpecify() {
     //preparar GPU
     std::vector<GLfloat> vertices = {
-        -0.8f,-0.8f, //left
-         0.8f,-0.8f, //right
-         0.0f, 0.8f //top
+        -0.8f,-0.8f,0.0f, //left
+         1.0f,  0.0f, 0.0f, //colores
+         0.8f,-0.8f, 0.0f, //right
+         0.0f,  1.0f, 0.0f, //colores
+         0.0f, 0.8f, 0.0f, //top
+         0.0f,  0.0f, 1.0f  //colores
     };
-    
-    std::vector<GLfloat> colores = {
-        1.0f,  0.0f, 0.0f,
-        0.0f,  1.0f, 0.0f,
-        0.0f,  0.0f, 1.0f
-    };
-
     
     
     glGenVertexArrays(1, &VAO);
@@ -92,16 +87,13 @@ void VertexSpecify() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //el espacio que voy a hacer en la GPU
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);//gl static draw: estara dibujado todo el tiempo, no es dinamico.
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);//como se entiende en la GPU
+    //como se entiende en la GPU la primera data: position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*6, (GLvoid*)0);
     glEnableVertexAttribArray(0);//Linkea el vao con el VBO, si no lo activo, el shader no recibirá los datos. (location =0)
 
-    glGenBuffers(1, &VBOrgb);
-    glBindBuffer(GL_ARRAY_BUFFER, VBOrgb);
-    glBufferData(GL_ARRAY_BUFFER, colores.size() * sizeof(GLfloat), colores.data(), GL_STATIC_DRAW);
-    //linkeo
+    //como se entiende en la GPU la segunda data: color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (GLvoid*)(sizeof(GLfloat) * 3));//lo ultimo es de donde empieza (GLVoid)
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);//como se entiende en la GPU
-    
     ShaderProgram = createShaderProgram();
     //desvinculo
     glBindVertexArray(0);
