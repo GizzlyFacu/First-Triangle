@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,24 +9,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\main.cpp",
-              "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\main.cpp",
-              "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFYAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-09T01:24:49.127Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }
