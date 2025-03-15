@@ -13,6 +13,7 @@ bool running = true;
 SDL_Event event{};
 //Vertex Specify
 GLuint VAO{}, VBO{};
+GLuint EBO{};
 GLuint ShaderProgram{};
 
 std::string gVertexShaderSource =
@@ -72,24 +73,22 @@ void Config() {
 void VertexSpecify() {
     //preparar GPU
     std::vector<GLfloat> vertices = {
-        -0.5f,-0.5f,0.0f, //Left
-         1.0f,  0.0f, 0.0f, //colores
-         0.5f,-0.5f, 0.0f, //Right
-         0.0f,  1.0f, 0.0f, //colores
-         -0.5f, 0.5f, 0.0f, //Top
+        -0.5f,-0.5f,0.0f, // 0 Left
+         1.0f,  0.0f, 0.0f, // colores
+         0.5f,-0.5f, 0.0f, // 1 Right
+         0.0f,  1.0f, 0.0f, // colores
+         -0.5f, 0.5f, 0.0f, // 2 Top
          0.0f,  0.0f, 1.0f,  //colores
 
-         -0.5f, 0.5f, 0.0f, //left
-         1.0f,  0.0f, 0.0f, //colores
-         0.5f,-0.5f, 0.0f, //right
-         0.0f,  1.0f, 0.0f, //colores
-         0.5f, 0.5f, 0.0f, //top
-         0.0f,  0.0f, 1.0f  //colores
-    };
+         0.5f, 0.5f, 0.0f, // 3 Top
+         1.0f,  0.0f, 0.0f,  //colores
+
+    }; std::vector<GLint> indexes = { 2,0,1,3,1,2 };
     
     
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //el espacio que voy a hacer en la GPU
@@ -101,6 +100,13 @@ void VertexSpecify() {
     //como se entiende en la GPU la segunda data: color
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (GLvoid*)(sizeof(GLfloat) * 3));//lo ultimo es de donde empieza (GLVoid)
     glEnableVertexAttribArray(1);
+
+    //Cuadrado tactico
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes.size() * sizeof(GLint), indexes.data(), GL_STATIC_DRAW);//gl static draw: estara dibujado todo el tiempo, no es dinamico.
+    glVertexAttribPointer(2, 1, GL_INT, GL_FALSE, sizeof(GLint), (GLvoid*)0);
+    glEnableVertexAttribArray(2);
+
     ShaderProgram = createShaderProgram();
     //desvinculo
     glBindVertexArray(0);
@@ -119,7 +125,8 @@ void MainLoop() {
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(ShaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        //glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
         SDL_GL_SwapWindow(window);
     }
 }
