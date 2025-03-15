@@ -3,7 +3,106 @@
 #include <glad/glad.h>
 #include <vector>
 #include <string>
+#include "CreateTris.h"
+#include <memory>
+GLuint VBO=0;
+GLuint VAO=0;
+int LODS = 3;
+std::vector<GLfloat> verticex = {
+    // Triángulo 1 LRT
+    -1.0f, 0.0f, 0.0f,  -0.8f, 0.0f, 0.0f,  -0.9f,  1.0f, 0.0f,
+    // Triángulo 2
+    0.8f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,    0.9f,  1.0f, 0.0f,
+    // Triángulo 3
+    -0.5f, 0.0f, 0.0f,  0.5f, 0.0f, 0.0f,  0.0f,  1.0f, 0.0f
+};
 
+void Config(std::vector<GLfloat> vertices) {
+
+    //selecciono
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    //envio
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(0);
+    //reseteo
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+
+int main() {
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window* window = SDL_CreateWindow("Smart Pointers OpenGL", 800, 600, SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
+    //SDL_SetWindowOpacity(window, 0.1f);
+    SDL_GLContext context = SDL_GL_CreateContext(window);
+    gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+       
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    //Crear Triangulos Ejemplos
+    
+    {
+
+        // Render loop simplificado
+
+
+        Config(verticex);
+        bool running = true;
+        while (running) {
+            SDL_Event event;
+            while (SDL_PollEvent(&event)) {
+                if (event.type == SDL_EVENT_QUIT || event.key.key == SDLK_ESCAPE) running = false;
+                else if (event.type == SDL_EVENT_KEY_UP)
+                {
+                    if (LODS<9)
+                    {
+                        LODS = LODS + 3;
+                    }
+                    else
+                    {
+                        std::cout << "Llegaste al maximo de triangulitos" << "\n";
+                    }
+
+                }
+                else if (event.type == SDL_EVENT_KEY_DOWN) {
+                    if (event.key.key == SDLK_SPACE) {
+                        std::cout << "¡Se presionó la barra espaciadora!" << std::endl;
+                    }
+                }
+            }
+            glClearColor(0.f,0.f,0.f,0.f);
+            
+
+            glClear(GL_COLOR_BUFFER_BIT);
+            if (VAO!=0)
+            {
+                
+                glBindVertexArray(VAO);
+                glDrawArrays(GL_TRIANGLES, 0, LODS);
+                glBindVertexArray(0);
+
+            }
+    
+            SDL_GL_SwapWindow(window);
+        }
+    }
+
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 0;
+}
+
+
+
+
+/*
 // Tamaño de la ventana
 SDL_Window* window = nullptr;
 const int SCREEN_WIDTH = 800;
@@ -11,7 +110,9 @@ const int SCREEN_HEIGHT = 600;
 // Bucle Principal
 bool running = true;
 SDL_Event event{};
+
 //Vertex Specify
+
 GLuint VAO{}, VBO{};
 GLuint ShaderProgram{};
 
@@ -134,3 +235,4 @@ int main() {
     
     return 0;
 }
+*/
