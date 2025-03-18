@@ -25,6 +25,10 @@ void Config(std::vector<GLfloat> vertices) {
     //envio
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OpenGL Error: " << error << std::endl;
+    }
     glEnableVertexAttribArray(0);
     //reseteo
     glBindBuffer(GL_ARRAY_BUFFER, 0);
