@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <vector>
 #include <string>
+#include <gtc/matrix_transform.hpp>
 
 // Tamaño de la ventana
 SDL_Window* window = nullptr;
@@ -15,20 +16,25 @@ SDL_Event event{};
 GLuint VAO{}, VBO{};
 GLuint EBO{};
 GLuint ShaderProgram{};
+//Movement of things ou yeah
 float u_Offset{0.0f};
+
 
 std::string gVertexShaderSource =
 "#version 330 core \n"
 "layout(location=0) in vec4 position;\n"
 "layout(location=1) in vec3 rgbColors; \n"
-"uniform float u_Offset;\n" //no se inicializan
+"uniform mat4 u_MatrixOffset;\n"
+
 "out vec3 v_rgbColors; \n"
 
 "void main()\n"
 "{\n"
     "v_rgbColors=rgbColors; \n"
+    "vec4 newPosition=u_MatrixOffset*(position); \n"
 
-"  gl_Position = vec4(position.x, position.y+u_Offset, position.z, position.w);\n"
+
+"  gl_Position = vec4(newPosition.x, newPosition.y, newPosition.z, 1.0f);\n"
 "}\n";
 
 std::string gFragmentShaderSource =
@@ -124,8 +130,12 @@ void MainLoop() {
             if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_C) {
                 std::cout << "TECLA PRESIONADA SUS" << u_Offset<< "\n";
                 u_Offset += 0.01f;
-                GLuint uniform_location = glad_glGetUniformLocation(ShaderProgram, "u_Offset");
-                glUniform1f(uniform_location,u_Offset);
+
+                glm::mat4 translated_obj = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, u_Offset, 0.0f));
+
+                GLuint location = glGetUniformLocation(ShaderProgram,"u_MatrixOffset");
+                glUniformMatrix4fv(location,1,GL_FALSE,&translated_obj[0][0]);
+
             }
                 
         }
