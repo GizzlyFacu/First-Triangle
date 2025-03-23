@@ -18,20 +18,23 @@ GLuint EBO{};
 GLuint ShaderProgram{};
 //Movement of things ou yeah
 float u_Offset{0.0f};
-
+//ses
+glm::mat4 translated_obj = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 std::string gVertexShaderSource =
 "#version 330 core \n"
 "layout(location=0) in vec4 position;\n"
 "layout(location=1) in vec3 rgbColors; \n"
 "uniform mat4 u_MatrixOffset;\n"
+"uniform mat4 u_MatrixRotation;\n"
+
 
 "out vec3 v_rgbColors; \n"
 
 "void main()\n"
 "{\n"
     "v_rgbColors=rgbColors; \n"
-    "vec4 newPosition=u_MatrixOffset*(position); \n"
+    "vec4 newPosition=u_MatrixRotation*(position); \n"
 
 
 "  gl_Position = vec4(newPosition.x, newPosition.y, newPosition.z, 1.0f);\n"
@@ -77,6 +80,8 @@ void Config() {
     window = SDL_CreateWindow("Epic Shiny LGTV Triangle", SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     SDL_GLContext glContext = SDL_GL_CreateContext(window);
     gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+
+    
 }
 void VertexSpecify() {
     //preparar GPU
@@ -127,18 +132,27 @@ void MainLoop() {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT)
                 running = false;
+            
+
+            /*
             if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_C) {
                 std::cout << "TECLA PRESIONADA SUS" << u_Offset<< "\n";
-                u_Offset += 0.01f;
-
-                glm::mat4 translated_obj = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, u_Offset, 0.0f));
+  
 
                 GLuint location = glGetUniformLocation(ShaderProgram,"u_MatrixOffset");
-                glUniformMatrix4fv(location,1,GL_FALSE,&translated_obj[0][0]);
+                GLuint locationRot = glGetUniformLocation(ShaderProgram, "u_MatrixRotation");
 
-            }
+                glUniformMatrix4fv(locationRot,1,GL_FALSE,&rotated_obj[0][0]);
+
+
+            }*/
+            
                 
         }
+
+        glm::mat4 rotated_obj = glm::rotate(translated_obj, glm::radians(45.0f + SDL_GetTicks() * 0.05f), glm::vec3(0.0f, 1.0f, 0.0f));
+        GLuint locationRot = glGetUniformLocation(ShaderProgram, "u_MatrixRotation");
+        glUniformMatrix4fv(locationRot, 1, GL_FALSE, &rotated_obj[0][0]);
 
         // Renderizar
         glClear(GL_COLOR_BUFFER_BIT);
