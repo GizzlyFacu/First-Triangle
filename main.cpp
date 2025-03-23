@@ -15,18 +15,20 @@ SDL_Event event{};
 GLuint VAO{}, VBO{};
 GLuint EBO{};
 GLuint ShaderProgram{};
+float u_Offset{0.0f};
 
 std::string gVertexShaderSource =
 "#version 330 core \n"
 "layout(location=0) in vec4 position;\n"
 "layout(location=1) in vec3 rgbColors; \n"
+"uniform float u_Offset;\n" //no se inicializan
 "out vec3 v_rgbColors; \n"
 
 "void main()\n"
 "{\n"
     "v_rgbColors=rgbColors; \n"
 
-"  gl_Position = vec4(position.x, position.y, position.z, position.w);\n"
+"  gl_Position = vec4(position.x, position.y+u_Offset, position.z, position.w);\n"
 "}\n";
 
 std::string gFragmentShaderSource =
@@ -119,6 +121,13 @@ void MainLoop() {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT)
                 running = false;
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_C) {
+                std::cout << "TECLA PRESIONADA SUS" << u_Offset<< "\n";
+                u_Offset += 0.01f;
+                GLuint uniform_location = glad_glGetUniformLocation(ShaderProgram, "u_Offset");
+                glUniform1f(uniform_location,u_Offset);
+            }
+                
         }
 
         // Renderizar
