@@ -83,6 +83,7 @@ void Config() {
     window = SDL_CreateWindow("Epic Shiny LGTV Triangle", SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     SDL_GLContext glContext = SDL_GL_CreateContext(window);
     gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+    SDL_SetWindowRelativeMouseMode(window, true);
 }
 void VertexSpecify() {
     //preparar GPU
@@ -137,8 +138,9 @@ void MainLoop() {
 
         GLuint camera_location = glad_glGetUniformLocation(ShaderProgram, "u_Camera");
         glUniformMatrix4fv(camera_location, 1, GL_FALSE, &u_Camera[0][0]);
+
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT)
+            if (event.type == SDL_EVENT_QUIT || event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_ESCAPE)
                 running = false;
             if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_C) {
                 std::cout << "TECLA PRESIONADA SUS" << u_Offset<< "\n";
@@ -167,7 +169,22 @@ void MainLoop() {
                 Camera.MoveBackward(0.1f);
                 std::cout << "TECLA PRESIONADA S" << u_Offset << "\n";
                 
-            }                
+            }
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_A) {
+                Camera.MoveLatLeft(0.1f);
+                std::cout << "TECLA PRESIONADA W" << u_Offset << "\n";
+
+
+            }
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_D) {
+                Camera.MoveLatRigth(0.1f);
+                std::cout << "TECLA PRESIONADA S" << u_Offset << "\n";
+
+            }
+            if (event.type == SDL_EVENT_MOUSE_MOTION) {
+                Camera.MouseMovement(event.motion.xrel, event.motion.yrel);
+
+            }
 
                 
         }
@@ -179,6 +196,7 @@ void MainLoop() {
         //glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
         SDL_GL_SwapWindow(window);
+        SDL_Delay(16);
     }
 }
 void CleanUp() {

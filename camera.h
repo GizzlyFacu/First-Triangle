@@ -19,6 +19,7 @@ public:
 	void MoveBackward(float speed);
 	void MoveLatLeft(float speed);
 	void MoveLatRigth(float speed);
+	void MouseMovement(float mouseX, float mouseY);
 
 private:
 	glm::vec3 mEye;
