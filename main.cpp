@@ -3,6 +3,9 @@
 #include <glad/glad.h>
 #include <vector>
 #include <string>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include "camera.h"
 
 // Tamaño de la ventana
 SDL_Window* window = nullptr;
@@ -15,20 +18,29 @@ SDL_Event event{};
 GLuint VAO{}, VBO{};
 GLuint EBO{};
 GLuint ShaderProgram{};
+//Perspectiv things
 float u_Offset{0.0f};
+glm::mat4 u_perspective = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 10.0f);
+camera Camera;
 
 std::string gVertexShaderSource =
 "#version 330 core \n"
 "layout(location=0) in vec4 position;\n"
 "layout(location=1) in vec3 rgbColors; \n"
 "uniform float u_Offset;\n" //no se inicializan
+"uniform mat4 u_Perspective;\n" 
+"uniform mat4 u_Camera;\n"
+
+
 "out vec3 v_rgbColors; \n"
+
 
 "void main()\n"
 "{\n"
     "v_rgbColors=rgbColors; \n"
+    
+    "gl_Position = u_Perspective *u_Camera* vec4(position.x, position.y, position.z-u_Offset, 1.0f);\n"
 
-"  gl_Position = vec4(position.x, position.y+u_Offset, position.z, position.w);\n"
 "}\n";
 
 std::string gFragmentShaderSource =
@@ -113,23 +125,53 @@ void VertexSpecify() {
     //desvinculo
     glBindVertexArray(0);
     glDisableVertexAttribArray(0);
+
+    //Perspective Matrices
+
 }
 void MainLoop() {
 
     //input
     while (running) {
+        glm::mat4 u_Camera = Camera.GetViewMatrix();
+
+        GLuint camera_location = glad_glGetUniformLocation(ShaderProgram, "u_Camera");
+        glUniformMatrix4fv(camera_location, 1, GL_FALSE, &u_Camera[0][0]);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT)
                 running = false;
             if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_C) {
                 std::cout << "TECLA PRESIONADA SUS" << u_Offset<< "\n";
-                u_Offset += 0.01f;
+                u_Offset += 0.1f;
+
+
                 GLuint uniform_location = glad_glGetUniformLocation(ShaderProgram, "u_Offset");
+                GLuint perspective_location = glad_glGetUniformLocation(ShaderProgram, "u_Perspective");
+                
+
+
+                
+
                 glUniform1f(uniform_location,u_Offset);
+                glUniformMatrix4fv(perspective_location,1,GL_FALSE, &u_perspective[0][0]);
+
             }
+
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_W) {
+                Camera.MoveForward(0.1f);
+                std::cout << "TECLA PRESIONADA W" << u_Offset << "\n";
+                
+
+            }
+            if (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_S) {
+                Camera.MoveBackward(0.1f);
+                std::cout << "TECLA PRESIONADA S" << u_Offset << "\n";
+                
+            }                
+
                 
         }
-
+        
         // Renderizar
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(ShaderProgram);

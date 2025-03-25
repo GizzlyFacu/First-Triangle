@@ -5,6 +5,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|solutionrelative:camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CF02D593-23E2-4424-9147-70296DA9EAC1}|OpenGLTriang.vcxproj|solutionrelative:camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,15 +22,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "camera.cpp",
+              "DocumentMoniker": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.cpp",
+              "RelativeDocumentMoniker": "camera.cpp",
+              "ToolTip": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.cpp",
+              "RelativeToolTip": "camera.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-25T01:20:08.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "camera.h",
+              "DocumentMoniker": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.h",
+              "RelativeDocumentMoniker": "camera.h",
+              "ToolTip": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\camera.h",
+              "RelativeToolTip": "camera.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-25T01:19:56.53Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -32,7 +62,7 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\usuario\\Documents\\Programacion\\OpenGLTriang\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAAAH8AAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAAAKYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-14T05:17:46.2Z",
               "EditorCaption": ""
