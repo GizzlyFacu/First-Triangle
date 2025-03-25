@@ -13,7 +13,7 @@ public:
 	}
 
 	glm::mat4 GetViewMatrix()const {
-		return glm::lookAt(mEye,mViewDirection,mUpVector);
+		return glm::lookAt(mEye,mEye+mViewDirection,mUpVector);
 	}
 	void MoveForward(float speed);
 	void MoveBackward(float speed);

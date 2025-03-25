@@ -10,11 +10,11 @@ void camera::MoveBackward(float speed) {
 }
 void camera::MoveLatLeft(float speed) {
 	mEye.x -= speed;
-	mViewDirection.x -= speed;
+	
 }
 void camera::MoveLatRigth(float speed) {
 	mEye.x += speed;
-	mViewDirection.x += speed;
+	
 
 }
 
