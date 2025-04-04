@@ -92,7 +92,7 @@ GLuint createShaderProgram(const std::string& VertexShaderSource, const std::str
 void Config() {
     // Inicializar everything
     SDL_Init(SDL_INIT_VIDEO);
-    TrisApp.mWindow = SDL_CreateWindow("Epic Shiny LGTV Triangle", TrisApp.mSCREEN_WIDTH, TrisApp.mSCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+    TrisApp.mWindow = SDL_CreateWindow("Epic Shiny LGTV Rotative Quad", TrisApp.mSCREEN_WIDTH, TrisApp.mSCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     TrisApp.mGlContext = SDL_GL_CreateContext(TrisApp.mWindow);
     gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
     SDL_SetWindowRelativeMouseMode(TrisApp.mWindow, true);
